@@ -1,0 +1,24 @@
+package com.korit.crud.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.korit.crud.entity.BoardEntity;
+import com.korit.crud.vo.BoardListVO;
+
+@Repository
+public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
+
+    void save(BoardEntity boardEntity);
+
+    // DISTINCT를 추가하여 중복 데이터 방지
+    @Query("SELECT DISTINCT new com.korit.crud.vo.BoardListVO(b.boardNumber, b.title, b.user.nickname, b.writeDate) FROM BoardEntity b ORDER BY b.boardNumber DESC")
+    List<BoardListVO> findAll();
+
+    boolean existsById(Integer boardNumber);
+
+    boolean deleteById(Integer boardNumber);
+}

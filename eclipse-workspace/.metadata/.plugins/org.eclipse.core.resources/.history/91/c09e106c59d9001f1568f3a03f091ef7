@@ -1,0 +1,18 @@
+package com.korit.crud.repository;
+
+import java.util.List;
+
+import com.korit.crud.entity.BoardEntity;
+import com.korit.crud.vo.BoardListVO;
+
+public interface BoardRepository {
+
+    void save(BoardEntity boardEntity);
+
+    // DISTINCT를 추가하여 중복 데이터 방지
+    List<BoardListVO> findAll();
+
+    boolean existsById(Integer boardNumber);
+
+    boolean deleteById(Integer boardNumber);
+}

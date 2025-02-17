@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;공부&apos; to &apos;공부_문제&apos;&#x0A;- Original project: &apos;seob2file&apos;&#x0A;- Original element: &apos;seob2file/src/공부&apos;&#x0A;- Renamed element: &apos;seob2file/src/공부_문제&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;공부&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;공부" name="공부_문제" qualified="false" references="true" stamp="1714543607714" textual="false" version="1.0"/>
+</session>

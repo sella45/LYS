@@ -1,0 +1,183 @@
+package com.korit.crud.repository.implement;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.korit.crud.entity.BoardEntity;
+import com.korit.crud.repository.BoardRepository;
+import com.korit.crud.vo.BoardListVO;
+import com.korit.crud.vo.BoardViewVO;
+
+public class BoardRepositoryImplement implements BoardRepository {
+
+	private final Connection connection;
+	
+	public BoardRepositoryImplement(Connection connection) {
+		this.connection = connection;
+	}
+
+	@Override
+	public void save(BoardEntity boardEntity) {
+		final String SQL = "INSERT INTO board (title, contents, write_date, writer_id) VALUES (?, ?, CURDATE(), ?)";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+			preparedStatement.setString(1, boardEntity.getTitle());
+			preparedStatement.setString(2, boardEntity.getContents());
+			preparedStatement.setString(3, boardEntity.getWriterId());
+			preparedStatement.executeUpdate();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<BoardListVO> findAll() {
+	    Set<BoardListVO> boardSet = new HashSet<>();  // 중복 제거를 위한 Set 사용
+	    
+	    final String SQL = "SELECT B.board_number, B.title, COALESCE(U.nickname, '알 수 없음') AS nickname, B.write_date " +
+	                       "FROM board B LEFT JOIN user U ON B.writer_id = U.id " +
+	                       "ORDER BY B.board_number DESC";
+	    
+	    
+
+	    try (PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+	         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+	        boolean hasResults = false;  // 결과 여부 확인용 변수
+
+	        while (resultSet.next()) {
+	            hasResults = true;  // 결과가 있는 경우 true로 변경
+
+	            Integer boardNumber = resultSet.getInt("board_number");
+	            String title = resultSet.getString("title");
+	            
+	            ResultSetMetaData metaData = resultSet.getMetaData();
+	            int columnCount = metaData.getColumnCount();
+	            System.out.println("📌 데이터베이스에서 반환된 컬럼 목록:");
+
+	            for (int i = 1; i <= columnCount; i++) {
+	                System.out.println(metaData.getColumnName(i));  // 테이블에서 가져온 컬럼명 출력
+	            }
+
+	            // 이제 contents 가져오기
+	            String contents = resultSet.getString("contents");
+	            String writerNickname = resultSet.getString("nickname");
+	            String writeDate = resultSet.getString("write_date");
+
+	            System.out.println("-----------------------------------------");
+	            System.out.println("게시글 번호: " + boardNumber);
+	            System.out.println("제목: " + title);
+	            System.out.println("내용: " + contents); 
+	            System.out.println("작성자 닉네임: " + writerNickname);
+	            System.out.println("작성일: " + writeDate);
+
+	            BoardListVO vo = new BoardListVO(boardNumber, title, contents, writerNickname, writeDate);
+	            boardSet.add(vo);
+	        }
+
+	        if (!hasResults) {
+	            System.out.println("⚠️ 게시글이 없습니다. 데이터베이스를 확인하세요.");
+	        } else {
+	            System.out.println("✅ 게시글 리스트 총 개수: " + boardSet.size());
+	        }
+
+	    } catch(Exception exception) {
+	        exception.printStackTrace();
+	    }
+
+	    return new ArrayList<>(boardSet);
+	}
+
+	@Override
+	public BoardViewVO findById(Integer boardNumber) {
+		BoardViewVO board = null;
+		
+		final String SQL = "SELECT B.title, B.contents, B.writer_id, U.nickname, B.write_date " +
+						   "FROM board B INNER JOIN user U ON B.writer_id = U.id " +
+						   "WHERE B.board_number = ?";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+			preparedStatement.setInt(1, boardNumber);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				String title = resultSet.getString("title");
+				String contents = resultSet.getString("contents");
+				String writerId = resultSet.getString("writer_id");
+				String writerNickname = resultSet.getString("nickname");
+				String writeDate = resultSet.getString("write_date");
+				
+				board = new BoardViewVO(title, contents, writerId, writerNickname, writeDate);
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return board;
+	}
+	
+	@Override
+	public boolean existsById(Integer boardNumber) {
+		boolean exist = false;
+		
+		final String SQL = "SELECT COUNT(*) FROM board WHERE board_number = ?";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+			preparedStatement.setInt(1, boardNumber);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				exist = resultSet.getInt(1) > 0;
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return exist;
+	}
+
+	@Override
+	public boolean updateByTitleAndContents(Integer boardNumber, String title, String contents) {
+		boolean result = false;
+		
+		final String SQL = "UPDATE board SET title = ?, contents = ? WHERE board_number = ?";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, contents);
+			preparedStatement.setInt(3, boardNumber);
+			preparedStatement.executeUpdate();		
+			
+			result = true;
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean deleteByBoardNumber(Integer boardNumber) {
+		boolean result = false;
+		
+		final String SQL = "DELETE FROM board WHERE board_number = ?";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+			preparedStatement.setInt(1, boardNumber);
+			preparedStatement.executeUpdate();			
+			
+			result = true;	
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return result;
+	}
+
+}

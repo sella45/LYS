@@ -1,0 +1,24 @@
+USE crud;
+
+CREATE TABLE user (
+    id  VARCHAR(255) NOT NULL PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    confirm_password VARCHAR(255) NOT NULL,
+    nickname VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+DROP DATABASE crud;
+
+
+SELECT id FROM user;
+ALTER TABLE user MODIFY COLUMN id VARCHAR(255) NOT NULL;
+
+SELECT * FROM user;
+SELECT * FROM board;
+ALTER TABLE user DROP COLUMN username;
+
+
+
+

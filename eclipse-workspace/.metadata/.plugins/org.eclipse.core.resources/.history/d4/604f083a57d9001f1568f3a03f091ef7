@@ -1,0 +1,29 @@
+package com.korit.crud.controller;
+
+import com.korit.crud.repository.BoardRepository;
+import com.korit.crud.vo.BoardListVO;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/boards")
+public class BoardController {
+
+    private final BoardRepository boardRepository;
+
+    public BoardController(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
+    // 게시글 리스트 조회 (중복 제거)
+    @GetMapping
+    public List<BoardListVO> getBoardList() {
+        List<BoardListVO> boardList = boardRepository.findAll();
+
+        // 중복 제거를 위해 Set 사용
+        Set<BoardListVO> boardSet = new HashSet<>(boardList);
+
+        return new ArrayList<>(boardSet);
+    }
+}

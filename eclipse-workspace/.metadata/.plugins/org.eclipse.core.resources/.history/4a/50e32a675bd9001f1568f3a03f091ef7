@@ -1,0 +1,47 @@
+package com.korit.crud.controller.implement;
+
+import com.korit.crud.dto.board.PatchBoardRequestDto;
+import com.korit.crud.dto.board.PostBoardRequestDto;
+import com.korit.crud.repository.BoardRepository;
+import com.korit.crud.vo.BoardViewVO;
+import com.korit.crud.controller.BoardController;
+import java.util.List;
+
+public class BoardControllerImplement implements BoardController {
+
+    private final BoardRepository boardRepository;
+
+    public BoardControllerImplement(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
+    @Override
+    public void postBoard(PostBoardRequestDto requestDto) {
+        System.out.println("게시글 작성: " + requestDto.getTitle());
+    }
+
+    @Override
+    public List<BoardViewVO> getBoardList() {
+        return boardRepository.findAll();
+    }
+
+    @Override
+    public BoardViewVO getBoardView(Integer boardNumber) {
+        return boardRepository.findById(boardNumber);
+    }
+
+    @Override
+    public boolean checkWriter(Integer boardNumber) {
+        return boardRepository.existsById(boardNumber);
+    }
+
+    @Override
+    public void updateBoard(PatchBoardRequestDto requestDto, Integer boardNumber) {
+        boardRepository.updateByTitleAndContents(boardNumber, requestDto.getTitle(), requestDto.getContents());
+    }
+
+    @Override
+    public void deleteBoard(Integer boardNumber) {
+        boardRepository.deleteByBoardNumber(boardNumber);
+    }
+}

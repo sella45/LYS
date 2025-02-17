@@ -1,0 +1,27 @@
+package com.korit.crud.controller;
+
+import com.korit.crud.dto.board.PatchBoardRequestDto;
+import com.korit.crud.dto.board.PostBoardRequestDto;
+import com.korit.crud.vo.BoardViewVO;
+import java.util.List;
+
+public interface BoardController {
+
+    // 게시글 작성
+    void postBoard(PostBoardRequestDto requestDto);
+
+    // 게시글 목록 조회
+    List<BoardViewVO> getBoardList();
+
+    // 특정 게시글 조회
+    BoardViewVO getBoardView(Integer boardNumber);
+
+    // 작성자 확인
+    boolean checkWriter(Integer boardNumber);
+
+    // 게시글 수정
+    void updateBoard(PatchBoardRequestDto requestDto, Integer boardNumber);
+
+    // 게시글 삭제
+    void deleteBoard(Integer boardNumber);
+}

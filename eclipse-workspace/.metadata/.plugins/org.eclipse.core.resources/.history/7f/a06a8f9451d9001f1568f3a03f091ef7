@@ -1,0 +1,84 @@
+package com.korit.crud.controller.implement;
+
+import com.korit.crud.CrudApplication;
+import com.korit.crud.controller.UserController;
+import com.korit.crud.dto.user.DeleteSignInUserRequestDto;
+import com.korit.crud.dto.user.PatchSignInUserRequestDto;
+import com.korit.crud.dto.user.PostRequestDto;  // 게시물 작성 DTO 추가
+import com.korit.crud.service.UserService;
+
+public class UserControllerImplement implements UserController {
+
+    private final UserService userService;
+    
+    public UserControllerImplement(UserService userService) {
+        this.userService = userService;
+    }
+    
+    @Override
+    public void getSignInUser() {
+        String id = CrudApplication.SESSION;
+        if (id == null) {
+            System.out.println("로그인이 되어있지 않습니다.");
+            return;
+        }
+        userService.getSignInUser(id);
+    }
+
+    @Override
+    public void patchSignInUser(PatchSignInUserRequestDto requestDto) {
+        String id = CrudApplication.SESSION;
+        if (id == null) {
+            System.out.println("로그인이 되어있지 않습니다.");
+            return;
+        }
+        if (requestDto == null) {
+            System.out.println("오류가 발생했습니다.");
+            return;
+        }
+        if (!requestDto.validate()) return;
+        
+        userService.patchSignInUser(requestDto, id);
+    }
+
+    @Override
+    public void deleteSignInUser(DeleteSignInUserRequestDto requestDto) {
+        String id = CrudApplication.SESSION;
+        if (id == null) {
+            System.out.println("로그인이 되어있지 않습니다.");
+            return;
+        }
+        if (requestDto == null) {
+            System.out.println("오류가 발생했습니다.");
+            return;
+        }
+        if (!requestDto.validate()) return;
+        
+        userService.deleteSignInUser(requestDto, id);
+    }
+
+    // 게시물 작성 메서드 추가
+    public void createPost(PostRequestDto requestDto) {
+        String author = CrudApplication.SESSION;  // 로그인된 사용자 닉네임
+        if (author == null) {
+            System.out.println("로그인이 되어있지 않습니다.");
+            return;
+        }
+        
+        // 작성할 게시물 객체 생성
+        Post post = new Post();
+        post.setTitle(requestDto.getTitle());
+        post.setContent(requestDto.getContent());
+        post.setAuthor(author);  // 작성자 정보 추가
+
+        userService.savePost(post);  // 게시물 저장
+    }
+
+    // 게시물 목록 보기 메서드 추가
+    public void showPostList() {
+        var posts = userService.getAllPosts();
+        for (var post : posts) {
+            System.out.println(post.getId() + " / " + post.getTitle() + " / " + post.getAuthor() + " / " + post.getCreatedDate());
+        }
+    }
+}

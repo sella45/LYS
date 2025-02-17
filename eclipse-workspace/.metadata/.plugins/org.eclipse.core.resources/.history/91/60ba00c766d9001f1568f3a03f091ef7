@@ -1,0 +1,83 @@
+package com.korit.crud.controller.implement;
+
+import com.korit.crud.dto.board.PatchBoardRequestDto;
+import com.korit.crud.dto.board.PostBoardRequestDto;
+import com.korit.crud.repository.BoardRepository;
+import com.korit.crud.vo.BoardListVO;
+import com.korit.crud.vo.BoardViewVO;
+import com.korit.crud.controller.BoardController;
+import java.util.List;
+
+public class BoardControllerImplement implements BoardController {
+
+    private final BoardRepository boardRepository;
+
+    public BoardControllerImplement(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
+    @Override
+    public void postBoard(PostBoardRequestDto requestDto) {
+        System.out.println("게시글 작성: " + requestDto.getTitle());
+    }
+    
+    @Override
+    public List<BoardListVO> getBoardList() {
+        List<BoardListVO> boardList = boardRepository.findAll();
+
+        System.out.println("\n------------------------------------------------");
+        System.out.println("📋 게시판 리스트");
+        System.out.println("------------------------------------------------");
+
+        if (boardList.isEmpty()) {
+            System.out.println("⚠️ 게시판에 등록된 게시글이 없습니다.");
+        } else {
+            for (BoardListVO board : boardList) {
+                System.out.println(board);
+            }
+        }
+
+        System.out.println("------------------------------------------------\n");
+        return boardList;
+    
+
+    @Override
+    public List<BoardListVO> getBoardList() {
+        return boardRepository.findAll();
+    }
+
+    @Override
+    public BoardViewVO getBoardView(Integer boardNumber) {
+        return boardRepository.findById(boardNumber);
+    }
+
+    @Override
+    public boolean checkWriter(Integer boardNumber) {
+        return boardRepository.existsById(boardNumber);
+    }
+
+    @Override
+    public void updateBoard(PatchBoardRequestDto requestDto, Integer boardNumber) {
+        boardRepository.updateByTitleAndContents(boardNumber, requestDto.getTitle(), requestDto.getContents());
+    }
+
+    @Override
+    public void deleteBoard(Integer boardNumber) {
+        boardRepository.deleteByBoardNumber(boardNumber);
+    }
+    // 댓글달기 기능 구현
+ // ✅ 댓글 추가 기능 구현
+    @Override
+    public void addComment(Integer boardNumber, String commentContents) {
+        boolean exists = boardRepository.existsById(boardNumber);
+
+        if (!exists) {
+            System.out.println("⚠️ 해당 게시물이 존재하지 않습니다.");
+            return;
+        }
+
+        boardRepository.addComment(boardNumber, commentContents);
+        System.out.println("✅ 댓글이 성공적으로 추가되었습니다.");
+    }
+    
+}
