@@ -128,27 +128,35 @@ result =
     (number < 0) ? '음수' : '영';
 
 /*
-    논리 연산자 : 
+    논리 연산자 : 우항과 좌항의 피연산자를 조합
     - || : 좌항과 우항 중 하나라도 true면 true, 그렇지 않으면 false
     - && : 좌항과 우항이 모두 true 이면 true, 그렇지 않으면 false
     - ! : 우항을 부정, 우항이 true이면 false, false이면 true
 */
-
+console.log(true || true);
+console.log(false && true);
+console.log(true || '문자열');
+console.log(false || '문자열');
+console.log(true && '문자열');
+console.log(0 && '문자열');
 
 
 /*
-    - 
+    - && 또는 || 연산의 결과가 논리값이 아닐 수 있음
+    - 논리 연산 결과를 결정하는 항의 값을 반환
 */
 
 
 
 /*
-    쉼표 연산자 : 
+    쉼표 연산자 : 왼쪽 피연산자부터 차례로 연산
 */
-
+var x, y, z;
+x = 1, y = 2, z = 3;
 
 
 /*
-    typeof 연산자 : 
+    typeof 연산자 : 우항의 데이터 및 변수의 타입을 문자열로 반환
 */
-
+var type = typeof x;
+console.log(type === 'number');
