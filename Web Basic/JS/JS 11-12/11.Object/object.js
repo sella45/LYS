@@ -16,36 +16,57 @@ var honfGingdong = {
     age: 26,
     address: '부산광역시',
     greeting : function () {
-        console.log('안녕하세요. ${this.name}입니다');
+        console.log(`안녕하세요. ${this.name}입니다`);
     }
 };
 console.log(honfGingdong);
 console.log(honfGingdong.name);
+honfGingdong.greeting();
+
+var name = '이방원';
+var age = 18;
+var ho = '태종';
+// 객체 생성자
+var taejong = {
+    name,
+    age , 
+    ho
+};
+console.log(taejong);
+
+console.log('==============================');
+/*
+    Object 생성자 : Object 클래스의 생성자로 빈 객체 생성 
+*/
+// 존재하면 변경, 존재하지 않으면 추가 
+var emptyObject = new Object();
+console.log(emptyObject);
+emptyObject.name = '이재황';
+console.log(emptyObject);
+emptyObject.name = '이척';
+console.log(emptyObject);
 
 
 console.log('==============================');
-
 /*
-    Object 생성자 : 
+    생성자 함수 : 생성자 함수를 사용하여 클래스처럼 사용 가능 
 */
-
-
-
-console.log('==============================');
-
-/*
-    생성자 함수 : 
-*/
-
-
+function King(name, start, end, ho) {
+    this.name = name;
+    this.start = start;
+    this.end = end;
+    this.ho = ho;
+}
+var saejo = new King('이유', 1455, 1468, '세조');
+console.log(saejo); 
 
 console.log('==============================');
 
 /*
     속성 이름 (속성 키) : 
-    - 
-    - 
-    - 
+    - 일반적으로 문자열로 표기함 
+    - 자바스크립트에서는 유효한 변수명일 경우 따옴표 생략 가능 
+    - 유효한 변수명이 아니면 반드시 따옴표를 사용해야함 
 */
 
 
