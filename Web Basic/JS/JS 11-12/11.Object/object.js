@@ -1,13 +1,26 @@
+// 자바스크립트 : 객체를 생성하는 것이 매우 편리하다 
+
 /*
-    객체 : 
-    - 
+    객체 : 키(key)와 값(value)로 구성된 속성들의 집합 
+    - 함수를 가지는 객체
 */
 
 /*
-    객체 리터럴 : 
-    - 
+    객체 리터럴 : 자바스크립트에서 가장 일반적인 객체 생성 방법
+    - {}를 사용하여 객체를 생성 
 */
+var emptyObj = {};
 
+var honfGingdong = {
+    name: '홍길동',
+    age: 26,
+    address: '부산광역시',
+    greeting : function () {
+        console.log('안녕하세요. ${this.name}입니다');
+    }
+};
+console.log(honfGingdong);
+console.log(honfGingdong.name);
 
 
 console.log('==============================');
