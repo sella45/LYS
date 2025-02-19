@@ -12,41 +12,67 @@
     <script>
 
         /*
-            JSON: 
-            - 
-            - 
-            - 
+            JSON: javascript Object Notation
+            - 클라이언트와 서버 간 데이터 교환을 위한 문자열 포멧 
+            - XML 포멧 보다 가볍고 사용성이 좋음
+            - 자바스크립트 객체 리터럴하고 동일하게 생겼지만 JSON은 100%문자열이다.
         */
 
         /*
             JSON.stringify : javascript 객체를 JSON 형식의 문자열로 변환
         */
-        
+        var human = {
+            name : '홍길동',
+            age : 20
+        }
+        console.log(human, typeof human);
+
+        var jsonHuman = JSON.stringify(human);
+        console.log(jsonHuman,typeof jsonHuman);
         
 
         console.log('==============================');
 
         /*
-            JSON.parse : 
+            JSON.parse(): jSON 형태의 문자열을 자바스크립트의 객체로 변환  
         */
-        
-        
+        var stringJson = '{\"name\" : \"이방원\", \"age\" : 55}';
+        console.log(stringJson, typeof stringJson);
+
+        var object = JSON.parse(stringJson);
+        console.log(object, typeof object);
+
 
         console.log('==============================');
 
         /*
             Fetch API
-            - 
-            - 
-            - 
-            - 
+            - HTTP 요청과 응답을 자바스크립트에서 접근하고 조작할 수 있도록 하는 인터페이스
+            - 비동기 함수 
+            - fetch(url, options);
+            - fetch(url, options).then(콜백함수).catch(콜백);
         */
+        // fetch 함수는 기본적으로 GET Request를 보냄
+        fetch('http://127.0.0.1:5500/HTML/A_hello.html');
+
+        fetch('http://127.0.0.1:5500/HTML/A_hello.html', {
+            method: 'POST', 
+            body: stringJson
+        });
+
 
         /*
             Request
         */
-        
+        var response = fetch('http://127.0.0.1:5500/HTML/A_hello.html');
+        console.log(response);
 
+        fetch('http://127.0.0.1:5500/HTML/A_hello.html').then
+        (function() {
+            console.log('fetch 작업!');
+            console.log(response.body);
+        });
+        console.log('fetch 작업 이후!');
 
         console.log('==============================');
 
