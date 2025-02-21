@@ -26,10 +26,10 @@ console.log('C point');
 
 promise
     .then(() => {
-        console.log(result);
+        // console.log(result);
     })
     .catch((result)=>{
-        console.log('catch : + result')
+        // console.log('catch : + result')
     })
 
     console.log('D point');
@@ -38,11 +38,21 @@ console.log('==================================================');
 
 /*
     async - await : 
-    - 
-    - 
-    - 
+    - 비동기 처리를 동기로 구현할 수 있도록 하는 방법 
+    - await 키워드로 비동기 처리를 기다리고 다음 작업을 수행 
+    - 반드시 async 키워드로 await을 포함하고 있는 함수를 비동기 함수로 변경해야 함 
 */
+// async function asyncFunc () {
+//     console.log('E point');
+//     console.log(await promise);
+//     console.log('F point');
+// }
 
 
-
+const asyncFunc = async() => {
+    console.log('E point');
+    console.log(await promise);
+    console.log('F point');
+}
+asyncFunc();
 console.log('==================================================');
