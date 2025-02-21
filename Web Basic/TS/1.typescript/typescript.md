@@ -8,24 +8,26 @@
 
 ```bash
 npm install -g typerscipt
+tsc --version
 ```
 
-- 
--  
+- 파일의 확장자 명을 .ts로 작성
+- .ts 파일을 .js 파일로 트랜스파일링 후 실행 
 
 ```bash
-
+tsc 파일명.ts
 ```
 
-- 
-- 
+- 기본적인 방식으로 트랜스파일링 하면 ES5으로 변환됨 
+- 타임스크립트 컴파일 설정을 위해서 tsconfig.json
 
 ```bash
-
+tsc --init 
 ```
 
-- 
+- 타입스크립트를 바로 실행하기 위해서 ts-node 패키지 사용 가능
 
 ```bash
-
+npm install -g ts-node 
+st-node 파일명.ts
 ```
