@@ -1,3 +1,4 @@
+import { count } from 'console';
 import React, { ChangeEvent, KeyboardEvent, MouseEvent } from 'react';
 
 // 이벤트 처리:
@@ -26,11 +27,45 @@ export default function EventComponent() {
     alert(`입력한 내용 : ${value}`);
 };
 
+const employee = [
+    {
+        name: '홍길동',
+        employeeNumber: '202501'
+    },
+    {
+        name: '이영희',
+        employeeNumber: '777777'
+    }
+    
+]
+// 이벤트 처리 콜백 함수로 매개변수가 event만 받는 형태가 아니라면 
+// 직접적으로 함수를 전달하여 사용할 수 없음 
+// 이때는 해당 이벤트 속성에 직접 익명 함수 표현식을 사용하여 전달 
+const onEmployeeNameClickHandler = (employNumber : string) => {
+    alert(`사원번호: ${employNumber}`);
+};
+
+let count = 0;
+const onIncreaseHandler = () => {
+    count ++;
+    alert(count);
+}
+
     return (
     <div>
         <button onClick={onClickHandler}>클릭</button>
         <input placeholder='키보드' onKeyDown={onKeyDownHandler}/>
         <input placeholder='변경' onChange={onChangeHandler}/>
+        <div>
+            {employee.map((employee,index) => (
+                <div key={index}>
+                    <h2 onClick={() => onEmployeeNameClickHandler(employee.employeeNumber)}>{employee.name}</h2>
+                </div>
+            ))}
+        </div>
+        <div>
+            {count} <button onClick={onIncreaseHandler}>증가</button>
+        </div>
     </div>
-    )
+    );
 }
