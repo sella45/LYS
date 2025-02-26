@@ -7,6 +7,7 @@ import Gallery from './component-manage/example/Exmaple1';
 import Profile from './component-manage/example/Example2';
 import ConditionRender from './component-manage/ConditionRender';
 import ListRender from './component-manage/ListRender';
+import EventComponent from './interaction/EventComponent';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
       {/* <Properties /> */}
       {/* <Profile /> */}
       {/* <ConditionRender /> */}
-      <ListRender />
+      {/* <ListRender /> */}
+      <EventComponent />  { /* 렌더링하는 컴포넌트 */ }
     </div>
   );
 }
