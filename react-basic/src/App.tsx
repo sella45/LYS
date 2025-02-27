@@ -10,6 +10,8 @@ import ListRender from './component-manage/ListRender';
 import EventComponent from './interaction/EventComponent';
 import StateComponent from './interaction/StateComponent';
 import ForwardingComponent from './interaction/ForwardingComponent';
+import HookComponent1 from './hook/HookComponent1';
+import HookComponent2 from './hook/HookComponent2';
 
 function App() {
   return (
@@ -24,8 +26,9 @@ function App() {
       {/* <ListRender /> */}
       {/*<EventComponent /> */} { /* 렌더링하는 컴포넌트 */ }
       {/*<StateComponent /> */ }
-      <ForwardingComponent />
-
+      {/*<ForwardingComponent /> */}
+      {/*<HookComponent1 />*/}
+      <HookComponent2 />
     </div>
   );
 }
