@@ -1,8 +1,6 @@
 
 package com.korit.basic.dto;
 
-
-
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
