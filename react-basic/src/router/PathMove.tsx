@@ -1,5 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 export default function PathMove() {
 
@@ -17,6 +17,12 @@ export default function PathMove() {
   // <Link>
   // - 현재 웹 애플리케이션 내에서 URL만 변경할 수 있도록 하는 컴포넌트
   // - <Link> 컴포넌트는 새로운 요청을 보내지 않음
+
+    // useNavigate() :
+    // - usenavigate 함수를 반환하는 react-route 훅 함수 
+    // - usenavigate 함수: 새로운 요청 없이 URL만 변경할 수 있도록 하는 함수 
+    const navigator = useNavigate();
+
     const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     // for (let index = 0; index <= 1000000; index++) {
     //   console.log(index + ' 실행중 ....');
@@ -25,6 +31,11 @@ export default function PathMove() {
     event.preventDefault();
     if (!state) return;
     
+    // window 객체의 location 객체의 hrf속성 값을 변경하여 경로를 이동하면 요청을 새로 보냄
+    // 현재 웹 애플리케이션의 상태를 유지할 수 없음 
+    window.location.href = 'http://127.0.0.1:3000/class';
+
+    navigator('/class');
 }
 
     return (
