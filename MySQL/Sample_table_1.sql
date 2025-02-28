@@ -11,3 +11,5 @@ CREATE TABLE sample_table_1 (
         sample_column VARCHAR(20)
     );
     
+    SELECT * FROM sample_table_1;
+    
