@@ -13,7 +13,8 @@ import ForwardingComponent from './interaction/ForwardingComponent';
 import HookComponent1 from './hook/HookComponent1';
 import HookComponent2 from './hook/HookComponent2';
 import CustomHookComponent from './hook/CustomHookComponent';
-import { Route, Routes } from 'react-router';
+import { Outlet, Route, Routes, useLocation } from 'react-router';
+import PathMove from './router/PathMove';
 
 // react-router 패키지 : 
 // - React의 SP(Single Page Application)에서 라ㅇ팅을 구현하기 위한 라이브러리 
@@ -31,6 +32,26 @@ import { Route, Routes } from 'react-router';
 // - Path 속성 : URL 패턴 지정 
 // - element 속성 : 렌더링할 컴포넌트를 지정 
 // - index 속성 : 현재 경로의 기본 라우터로 지정 
+function  InteractionLayout() {
+
+  // useLocation : 
+  // - 현재 경로에 대한 객체를 반환하는 react-route의 훅 함수 
+  // - pathname 속성 : 현재 Path를 가지고 있는 속성 
+  const {pathname} = useLocation();
+  console.log('location');
+
+  //  <Outlet> : 부모 <Route> 해당 컴포넌트가 element로 등록되었을 때 
+  //             자식 <Route> element가 해당 위치에 렌더링 되도록 하는 컴포넌트 
+  return (
+    <div>
+      <div style={{background : 'blue', height: '150px'}}>상호작용</div>
+      <Outlet />
+      <div style={{background : 'red', height: '150px'}}>푸터</div>
+    </div>
+  )
+}
+
+
 function App() {
   return (
       <Routes>
@@ -38,13 +59,16 @@ function App() {
         <Route path={'/class'} element={<ClassComponent />} />
         <Route path={'/function'} element= {<FunctionalComponent />} />
 
-        <Route path={'/interaction'}>
+        <Route path={'/interaction'} element= {<InteractionLayout />}>
           <Route index element={<StateComponent />} />
           <Route path={'event-component'} element={<EventComponent />} />
           <Route path={'ForwardingComponent'} element={<ForwardingComponent />} />
-
         </Route>
 
+        <Route path={'p-'}>
+          <Route path={'path-move'} element={<PathMove />} />
+        </Route>
+        <Route path={'*'} element={<h1>404!</h1>} />
 
       </Routes>
   );
