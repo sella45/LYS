@@ -5,3 +5,9 @@ CREATE TABLE sample_table_1 (
     sample_column_1 INT NOT NULL,
     sample_column_2 BOOLEAN
     );
+
+    CREATE TABLE sample_table_2 (
+        ai_pk INT AUTO_INCREMENT PRIMARY KEY,
+        sample_column VARCHAR(20)
+    );
+    
