@@ -44,9 +44,19 @@ export default function Storage() {
     };
 
     const onStorageSave = () => {
+        // 공백이 있으면 저장하지 못하도록
+        if (!storageKey.trim()) {
+            alert("스토리지 키를 입력하세요!"); 
+            return;
+        }
+        if (!storageValue.trim()) {
+            alert("스토리지 값을 입력하세요!"); 
+            return;
+        }
         // 스토리지 데이터 저장하는 방법
         // localStorage.setItem(key, value);
         localStorage.setItem(storageKey.trimEnd(), storageValue.trimEnd());
+        
     };
     
     const onGetStorageValue = () => {
@@ -75,9 +85,16 @@ export default function Storage() {
     };
 
     return (
+        
         <div>
+            <div>
             스토리지 키: <input value={storageKey} onChange={onStorageKeyChange} />
+            </div>
+
+            <div>
             스토리지 값: <input value={storageValue} onChange={onStorageValueChange} />
+            </div>
+
             <button style={{ cursor: 'pointer' }} onClick={onStorageSave}>저장</button>
             <button style={{ cursor: 'pointer' }} onClick={onGetStorageValue}>검색</button>
             <button style={{ cursor: 'pointer' }} onClick={onRemoveStorage}>삭제</button>
