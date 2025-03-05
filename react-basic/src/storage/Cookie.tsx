@@ -40,17 +40,32 @@ export default function Cookie() {
         // 옵션 
         // - path: 해당 쿠키가 적용될 경로 
         // - expires: 만료 시간
-        // - 
-        setCookie(cookieName, cookieValue, {path: '/'});
+        const now = new Date();
+        const expires = new Date(now.setSeconds(now.getSeconds() + 10));
+        setCookie(cookieName, cookieValue, {path: '/', //expires 
+        });
     };
+
+    const onGetCookie = () => {
+        // cookie 객체에 브라우저가 가지고 있는 쿠기 정보가 담겨 있음 
+        // console.log(cookies);
+        // console.log(cookies.name);
+        console.log(cookies[cookieName]);
+    };
+
+    const onRemoveCookie = () => {
+        // removeCookie 함수를 사용하여 쿠키 제거 가능
+        // removeCookie(쿠키이름, 옵션[선택]);
+        removeCookie(cookieName, {path: '/'});
+    }
 
   return (
     <div>
         <input value={cookieName} onChange={onNameChange} />
         <input value={cookieValue} onChange={onValueChange} />
         <button onClick={onAddClick}>추가</button>
-        <button>확인</button>
-        <button>제거</button>
+        <button onClick={onGetCookie}>확인</button>
+        <button onClick={onRemoveCookie}>제거</button>
     </div>
   )
 }
