@@ -19,6 +19,7 @@ import QueryString from './router/QueryString';
 import PathVariable from './router/PathVariable';
 import Zustand from './zustand/Zustand';
 import Storage from './storage/Storage';
+import Cookie from './storage/Cookie';
 
 // react-router 패키지:
 // - React의 SPA(Single Page Application)에서 라우팅을 구현하기 위한 라이브러리
@@ -74,7 +75,13 @@ function App() {
       </Route>
 
       <Route path={'/zustand'} element= {<Zustand />} />
-      <Route path={'/storage'} element= {<Storage />} />
+
+      <Route path={'/storage'}>
+        <Route element={<Storage />} />
+        <Route path={'cookie'} element={<Cookie />} />
+      </Route>
+      
+      
 
       <Route path={'*'} element={<h1>404!</h1>} />
       
