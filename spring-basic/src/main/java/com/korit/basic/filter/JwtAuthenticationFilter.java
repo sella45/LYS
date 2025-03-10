@@ -71,6 +71,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       // List<GrantedAuthority> roles = new ArrayList<>();
       // roles.add(new SimpleGrantedAuthority(role));
 
+      // 권한 규칙
+      // 문자열
+      // "ROUL_" 로 시작하는 문자열
+      // String roul = userEntity.getHeader
+      // List<GrantedAuthority> 
+      // 
+
       // 5. principle에 대한 정보를 context에 저장
 
       // 5-1. principle에 대한 정보를 인증된 사용자 객체로 생성
